@@ -4,7 +4,7 @@ import FetchData from "./Utils/FetechData";
 
 const App = () => {
   // console.log(import.meta.env.VITE_EHS_API);
-  console.log(FetchData())
+  // console.log(FetchData())
   return (
     <>
       <Routes>
