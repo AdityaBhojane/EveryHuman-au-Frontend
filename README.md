@@ -1,4 +1,5 @@
-# Fusion Find is and Shopping app 
+# EveryHuman au-Frontend
+
 ## This is an simple project where using API some functionality is added
 
 ### Installation Guide :

@@ -1,14 +1,14 @@
-import { useState } from 'react'
-import './App.css'
+import React from 'react';
+import * as Form from '@radix-ui/react-form';
+import { Route, Router } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-    
-    </>
-  )
-}
+const App = () => (
+  <>
+    <Router>
+      <Route path='/' element={<Home/>} />
+    </Router>
+  </>
+);
 
-export default App
+export default App;
