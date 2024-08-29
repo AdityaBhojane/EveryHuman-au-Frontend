@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 
 
-function Card({Title,Description}) {
+function Card({Title,Description,image}) {
   return (
     <>
       <div className="card glass w-96">
         <figure>
           <img
-            src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+            src={image}
             alt="car!"
           />
         </figure>

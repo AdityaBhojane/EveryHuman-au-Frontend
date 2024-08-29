@@ -6,7 +6,7 @@ export default async function FetchData(page=1) {
         // console.log(response.data.products)
         return response.products
     } catch (error) {
-        console.log(error)
+        // console.log(error)
         return null;
     }
 }
