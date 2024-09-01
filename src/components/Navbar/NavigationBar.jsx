@@ -1,44 +1,53 @@
+import { useNavigate } from "react-router-dom";
 import ThemeSwitch from "../themes/ThemeSwitch";
 
 function NavigationBar() {
+  const navigation = useNavigate();
   return (
     <>
-      <div className="flex">
+      <div className="flex select-none">
         <div className="navbar bg-base-100 w-[90%] m-auto">
-          <div className="drawer sm:hidden">
+          <div className="drawer lg:hidden">
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content max-sm:min-w-24">
               <label htmlFor="my-drawer" className="flex-1">
-                <a className="btn btn-ghost text-xl max-sm:text-sm max-sm:border-[#919191] rounded-xl">EH Shop</a>
+                <a className="btn btn-ghost text-xl max-lg:text-sm max-lg:border-[#919191] rounded-xl">
+                  EH Shop
+                </a>
               </label>
             </div>
-            <div className="drawer-side ">
+            <div className="drawer-side z-10">
               <label
                 htmlFor="my-drawer"
                 aria-label="close sidebar"
-                className="drawer-overlay"
+                className="drawer-overlay "
               ></label>
-              <ul className="menu bg-base-200 text-base-content min-h-full w-70 p-4">
+              <ul className="menu bg-base-200 text-base-content min-h-full w-40 p-4">
                 {/* Sidebar content here */}
-                <li>
-                  <a>Sidebar Item 1</a>
-                </li>
-                <li>
-                  <a>Sidebar Item 2</a>
-                </li>
+                <li className="font-bold cursor-pointer select-none">Womens</li>
+                <li className="font-bold cursor-pointer select-none">Mens</li>
+                <li className="font-bold cursor-pointer select-none">Brands</li>
+                <li className="font-bold cursor-pointer select-none">Sale</li>
               </ul>
             </div>
           </div>
-          <div className="flex-1 max-sm:hidden">
+          <div className="flex-1 max-lg:hidden min-w-36">
             <a className="btn btn-ghost text-xl max-sm:text-sm ">EH Shop</a>
           </div>
+          <ul className="gap-5 mr-10 max-lg:hidden">
+                {/* Sidebar content here */}
+                <li onClick={()=> navigation('/')} className="font-bold cursor-pointer select-none">Home</li>
+                <li onClick={()=> navigation('/products')} className="font-bold cursor-pointer select-none">Store</li>
+                <li onClick={()=> navigation('/cart')} className="font-bold cursor-pointer select-none">Order</li>
+                <li onClick={()=> navigation('/order')} className="font-bold cursor-pointer select-none">Cart</li>
+              </ul>
           <div className="flex-none gap-2">
             <div className="form-control flex">
               <div className="flex items-center ">
                 <input
                   type="text"
                   placeholder="Search"
-                  className="input input-bordered w-24 max-sm:w-20 h-10 mx-4 md:w-auto"
+                  className="input input-bordered w-60 max-sm:max-w-32 h-10 mx-4 max-md:w-50 "
                 />
                 <button className="btn btn-ghost btn-circle">
                   <svg
@@ -97,3 +106,6 @@ function NavigationBar() {
 }
 
 export default NavigationBar;
+
+
+// https://everyhuman.com.au/collections.json ( random banners)

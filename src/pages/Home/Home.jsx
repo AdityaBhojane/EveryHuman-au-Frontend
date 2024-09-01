@@ -1,28 +1,21 @@
-import { useEffect, useState } from "react"
-import Card from "../../components/Card/Card"
+
 import NavigationBar from "../../components/Navbar/NavigationBar"
-import FetchData from "../../Utils/FetechData"
-import { useQuery } from "@tanstack/react-query"
+import MainSection from "../../components/MainSection/MainSection"
+import NewArrivals from "../../components/NewArrivals/NewArrivals"
+import Footer from "../../components/Footer/Footer"
+import Banner from "../../components/Banner/Banner"
 
 
 function Home() {
   
-
-const {data} = useQuery({ 
-  queryKey: ['Products'], 
-  queryFn: () => FetchData() 
-})
-
- console.log(data)
   
   return (
     <>
         <NavigationBar/>
-        {data?.map((items,index)=>{
-          return (
-            <Card key={index} Title={items.title} image={items.images[0].src} Description={items.handle}   />
-          )
-        })}
+        <MainSection/>
+        <Banner/>
+        <NewArrivals/>
+        <Footer/>
     </>
   )
 }
