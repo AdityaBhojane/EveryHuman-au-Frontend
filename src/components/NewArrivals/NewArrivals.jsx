@@ -7,18 +7,17 @@ function NewArrivals() {
   const [page, setPage] = useState(0);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["Products"],
+    queryKey: ["Products", page],
     queryFn: () => FetchData(page),
   });
 
-  console.log(isLoading);
-
   return (
-      <>
+    <>
+      <div className="w-[90%] mt-5   m-auto">
         <div className="text-center mt-20">
           <h1 className="text-3xl">New Collection</h1>
         </div>
-        <div className="w-[90%] mt-5 m-auto grid grid-cols-4 gap-10 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
+        <div className="w-[90%] mt-20 m-auto grid grid-cols-4 gap-10 max-xl:grid-cols-3 max-lg:grid-cols-2 max-sm:grid-cols-1">
           {data?.map((items, index) => {
             return (
               <Card
@@ -26,6 +25,9 @@ function NewArrivals() {
                 Title={items.title}
                 image={items.images[0].src}
                 Description={items.handle}
+                isLoading={isLoading
+                  
+                }
               />
             );
           })}
@@ -50,8 +52,9 @@ function NewArrivals() {
             Next
           </button>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
+}
 
-  export default NewArrivals;
+export default NewArrivals;

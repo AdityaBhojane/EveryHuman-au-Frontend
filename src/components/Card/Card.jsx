@@ -5,7 +5,7 @@ function Card({Title,Description,image}) {
   return (
     <>
       <div className="card glass w-3/2 rounded-xl">
-        <div className="w-full h-[300px]  max-sm:h-[500px]">
+        <div className="w-full max-sm:h-[500px]">
           <img
             src={image}
             alt="car!"
