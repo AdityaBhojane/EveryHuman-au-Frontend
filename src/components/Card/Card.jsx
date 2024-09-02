@@ -2,6 +2,7 @@
 
 
 function Card({Title,Description,image}) {
+
   return (
     <>
       <div className="card glass w-3/2 rounded-xl">

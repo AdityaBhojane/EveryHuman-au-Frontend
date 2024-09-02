@@ -2,18 +2,22 @@ import { useQuery } from "@tanstack/react-query";
 import FetchData from "../../Utils/FetechData";
 import Card from "../Card/Card";
 import { useState } from "react";
+import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
 function NewArrivals() {
   const [page, setPage] = useState(0);
-
   const { data, isLoading } = useQuery({
     queryKey: ["Products", page],
-    queryFn: () => FetchData(page),
+    queryFn: () => FetchData(page),   
   });
+  
+  if(isLoading){
+    return <CardSkeleton/>
+  }
 
   return (
     <>
-      <div className="w-[90%] mt-5   m-auto">
+      <div className="w-[90%] mt-5 m-auto">
         <div className="text-center mt-20">
           <h1 className="text-3xl">New Collection</h1>
         </div>
@@ -25,9 +29,6 @@ function NewArrivals() {
                 Title={items.title}
                 image={items.images[0].src}
                 Description={items.handle}
-                isLoading={isLoading
-                  
-                }
               />
             );
           })}
