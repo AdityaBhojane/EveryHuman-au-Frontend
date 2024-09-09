@@ -9,15 +9,21 @@ function BestSeller() {
 
   return (
     <div className="hero bg-base-200 min-h-screen select-none">
-      <div className="hero-content flex-col lg:flex-row-reverse">
-        <img
-          src={data && data[0].images[0].src}
-          className="max-w-sm rounded-lg shadow-2xl"
-        />
+      <div className="flex w-[90%] mx-auto flex-col lg:flex-row-reverse">
+        <div className="flex gap-2">
+          <img
+            src={data && data[0].images[2].src}
+            className="max-w-sm rounded-lg shadow-2xl"
+          />
+          <img
+            src={data && data[0].images[0].src}
+            className="max-w-sm rounded-lg shadow-2xl"
+          />
+        </div>
         <div className="self-start">
           <h1 className="text-6xl font-bold">Best Seller !</h1>
           <p className="py-6 w-[80%] text-xl">
-            PExperience the perfect blend of quality, functionality, and style
+            Experience the perfect blend of quality, functionality, and style
             with our. Designed to meet your everyday needs, this versatile
             product is a must-have for anyone looking to enhance their
             lifestyle. High-Quality Material: Made from premium [Material],

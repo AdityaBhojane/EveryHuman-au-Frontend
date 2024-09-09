@@ -38,8 +38,8 @@ function NavigationBar() {
                 {/* Sidebar content here */}
                 <li onClick={()=> navigation('/')} className="font-bold cursor-pointer select-none">Home</li>
                 <li onClick={()=> navigation('/products')} className="font-bold cursor-pointer select-none">Store</li>
-                <li onClick={()=> navigation('/cart')} className="font-bold cursor-pointer select-none">Order</li>
-                <li onClick={()=> navigation('/order')} className="font-bold cursor-pointer select-none">Cart</li>
+                <li onClick={()=> navigation('/OrderStatus')} className="font-bold cursor-pointer select-none">Order</li>
+                <li onClick={()=> navigation('/cart')} className="font-bold cursor-pointer select-none">Cart</li>
               </ul>
           <div className="flex-none gap-2">
             <div className="form-control flex">
