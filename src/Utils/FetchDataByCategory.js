@@ -1,12 +1,17 @@
 import {instance} from "../Helpers/BaseURL"
 
-export default async function FetchData(page=1) {
+export default async function FetchDataByCategory(category) {
     try {
-        const response = await instance.get(`?limit=2&page=${page}`)
+        const response = await instance.get(`https://everyhuman.com.au/products.json`)
         // console.log(response.data.products)
-        return response.products
+        const filteredProducts =  response.data.products.filter((items) => items.product_type == category)
+        return filteredProducts
+        // return response.data.products
+
     } catch (error) {
         console.log(error)
         return null;
     }
 }
+
+// https://everyhuman.com.au/products.json?category=Shoes&limit=10&page=1
