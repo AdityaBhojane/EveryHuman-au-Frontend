@@ -5,7 +5,7 @@ import { useState } from "react";
 import CardSkeleton from "../CardSkeleton/CardSkeleton";
 
 function NewArrivals() {
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(2);
   const { data, isLoading } = useQuery({
     queryKey: ["Products", page],
     queryFn: () => FetchData(page),   
@@ -27,8 +27,9 @@ function NewArrivals() {
               <Card
                 key={index}
                 Title={items.title}
-                image={items.images[0].src}
+                image={items?.images[0]?.src}
                 Description={items.handle}
+                price={items.variants[0].price}
               />
             );
           })}

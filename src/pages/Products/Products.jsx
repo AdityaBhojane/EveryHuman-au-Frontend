@@ -1,15 +1,20 @@
 
+import { useRef, useState } from "react";
 import ShopProducts from "../../components/ShopProducts/ShopProducts";
-import { useProductStore } from "../../store/Store";
+import { useProductStore, useSearchStore } from "../../store/Store";
 
 function Products() {
-  const {setCategory} = useProductStore();
+  const setCategory = useProductStore((state) => state.setCategory);
+  const setFetchBySearch = useSearchStore((state) => state.setFetchBySearch);
+  const Footwear = useRef();
+  const Tops = useRef();
+
+  const [price, setPrice] = useState(50);
 
   const HandleCategory = (newCategory)=>{
     setCategory(newCategory)
   }
-
-
+  
   return (
     <>
       <div className="container mx-auto p-8">
@@ -24,13 +29,14 @@ function Products() {
                 <h3 className="font-semibold">Price Range</h3>
                 <input
                   type="range"
-                  min="0"
-                  max="500"
+                  min="30"
+                  max="120"
                   className="range range-primary"
+                  onChange={(e)=> setPrice(e.target.value)}
                 />
                 <div className="flex justify-between text-sm">
-                  <span>$10</span>
-                  <span>$500</span>
+                  <span>${price}</span>
+                  <span>$120</span>
                 </div>
               </div>
 
@@ -42,7 +48,14 @@ function Products() {
                     <input
                       type="checkbox"
                       className="checkbox checkbox-primary"
-                      onClick={()=> HandleCategory("Footwear")}
+                      onClick={()=> {
+                        HandleCategory("Footwear");
+                        setFetchBySearch(false);
+                        if(Tops.current.checked){
+                          Tops.current.checked = false;
+                        }
+                      }}
+                      ref={Footwear}
                     />
                     <span>Footwear</span>
                   </label>
@@ -50,7 +63,14 @@ function Products() {
                     <input
                       type="checkbox"
                       className="checkbox checkbox-primary"
-                      onClick={()=> HandleCategory("Tops")}
+                      onClick={()=>{ 
+                        HandleCategory("Tops");
+                        setFetchBySearch(false);
+                        if(Footwear.current.checked){
+                          Footwear.current.checked = false;
+                        }
+                      }}
+                      ref={Tops}
                     />
                     <span>Tops</span>
                   </label>
@@ -61,7 +81,7 @@ function Products() {
           </div>
 
           {/* Product Grid */}
-          <ShopProducts/>
+          <ShopProducts price={price} setPrice={setPrice} />
         </div>
       </div>
     </>

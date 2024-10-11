@@ -1,12 +1,17 @@
 import { instance } from "../Helpers/BaseURL";
 
-export default async function FetchDataByCategory(category, price) {
+export default async function FetchDataBySearch(searchValue, price) {
   try {
-    const response = await instance.get(`/products.json?limit=100`);
+    const response = await instance.get(`/products.json?limit=500`);
+    // console.log(response.data.products)
+    // Introduce a 2-second delay
+    // await new Promise((resolve) => setTimeout(resolve, 2000));
     const filteredProducts = response.data.products.filter(
-      (items) => items.product_type == category
+      (items) =>
+        items.title.toLowerCase().includes(searchValue.toLowerCase())
     );
     const newPrice = filteredProducts[0]?.variants[0]?.price;
+
     if (price > newPrice) {
       return filteredProducts.filter(
         (items) =>
@@ -14,6 +19,7 @@ export default async function FetchDataByCategory(category, price) {
           parseInt(items.variants[0].price) > price - price / 4
       );
     } else {
+      console.log(filteredProducts);
       return filteredProducts;
     }
   } catch (error) {
@@ -21,3 +27,5 @@ export default async function FetchDataByCategory(category, price) {
     return null;
   }
 }
+
+// https://everyhuman.com.au/products.json?category=Shoes&limit=10&page=1

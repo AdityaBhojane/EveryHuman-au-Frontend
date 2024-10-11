@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import FetchBanner from "../../Utils/FetchBanner";
+import FetchBanner from "../../Utils/FetchDataByCategory/";
 
 function Banner() {
   const { data } = useQuery({

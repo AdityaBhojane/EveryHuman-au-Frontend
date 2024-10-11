@@ -4,3 +4,11 @@ import { create } from "zustand";
     category:'Tops',
     setCategory : (cat) => set({category: cat})
 }))
+
+ export const useSearchStore = create((set) => ({
+    fetchBySearch: true,
+    searchValue: '',
+    setSearchValue : (val) => set({searchValue: val}),
+    setFetchBySearch : (val) => set({fetchBySearch: val}),
+
+}))

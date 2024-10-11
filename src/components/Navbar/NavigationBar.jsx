@@ -1,8 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import ThemeSwitch from "../themes/ThemeSwitch";
+import { useSearchStore } from "../../store/Store";
+
 
 function NavigationBar() {
   const navigation = useNavigate();
+  const searchValue = useSearchStore((state) => state.searchValue);
+  const setSearchValue = useSearchStore((state) => state.setSearchValue);
+  const setFetchBySearch = useSearchStore((state) => state.setFetchBySearch);
+  
+
+  const navigate = useNavigate();
+
   return (
     <>
       <div className="flex select-none">
@@ -24,10 +33,10 @@ function NavigationBar() {
               ></label>
               <ul className="menu bg-base-200 text-base-content min-h-full w-40 p-4">
                 {/* Sidebar content here */}
-                <li className="font-bold cursor-pointer select-none">Womens</li>
-                <li className="font-bold cursor-pointer select-none">Mens</li>
-                <li className="font-bold cursor-pointer select-none">Brands</li>
-                <li className="font-bold cursor-pointer select-none">Sale</li>
+                <li onClick={()=> navigation('/')} className="font-bold cursor-pointer select-none">Home</li>
+                <li onClick={()=> navigation('/products')} className="font-bold cursor-pointer select-none">Store</li>
+                <li onClick={()=> navigation('/OrderStatus')} className="font-bold cursor-pointer select-none">Order</li>
+                <li onClick={()=> navigation('/cart')} className="font-bold cursor-pointer select-none">Cart</li>
               </ul>
             </div>
           </div>
@@ -45,7 +54,15 @@ function NavigationBar() {
             <div className="form-control flex">
               <div className="flex items-center ">
                 <input
+                  onChange={(e)=> setSearchValue(e.target.value)}
                   type="text"
+                  value={searchValue}
+                  onKeyDown={(e)=>{
+                    if(e.key == "Enter"){
+                      setFetchBySearch(true);
+                      navigate('/products');
+                    }
+                  }}
                   placeholder="Search"
                   className="input input-bordered w-60 max-sm:max-w-32 h-10 mx-4 max-md:w-50 "
                 />
@@ -53,6 +70,11 @@ function NavigationBar() {
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
+                    onClick={()=>{
+                      console.log("first");
+                      setFetchBySearch(true);
+                      navigate('/products');
+                    }}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
