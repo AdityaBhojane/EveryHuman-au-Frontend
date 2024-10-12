@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import ThemeSwitch from "../themes/ThemeSwitch";
-import { useSearchStore } from "../../store/Store";
+import { useCartStore, useSearchStore } from "../../store/Store";
 
 
 function NavigationBar() {
@@ -8,6 +8,7 @@ function NavigationBar() {
   const searchValue = useSearchStore((state) => state.searchValue);
   const setSearchValue = useSearchStore((state) => state.setSearchValue);
   const setFetchBySearch = useSearchStore((state) => state.setFetchBySearch);
+  const cartProduct = useCartStore((state)=> state.cartProduct);
   
 
   const navigate = useNavigate();
@@ -48,7 +49,8 @@ function NavigationBar() {
                 <li onClick={()=> navigation('/')} className="font-bold cursor-pointer select-none">Home</li>
                 <li onClick={()=> navigation('/products')} className="font-bold cursor-pointer select-none">Store</li>
                 <li onClick={()=> navigation('/OrderStatus')} className="font-bold cursor-pointer select-none">Order</li>
-                <li onClick={()=> navigation('/cart')} className="font-bold cursor-pointer select-none">Cart</li>
+                <li onClick={()=> navigation('/cart')} className="font-bold cursor-pointer select-none relative"
+                  >Cart <div className="badge badge-secondary text-[10px] absolute bottom-3 rounded-full">{cartProduct.length}</div></li>
               </ul>
           <div className="flex-none gap-2">
             <div className="form-control flex">

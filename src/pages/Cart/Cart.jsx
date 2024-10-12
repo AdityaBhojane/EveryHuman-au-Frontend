@@ -1,7 +1,13 @@
 import { useState } from "react";
+import { useCartStore, useOrderStore } from "../../store/Store";
+import imageNotFound from "../../assets/imageNotFound.png";
+import { useNavigate } from "react-router-dom";
 
 function Cart() {
   const [quantity, setQuantity] = useState(1);
+  const cartProduct = useCartStore((state) => state.cartProduct);
+  // const setClearCart = useCartStore(state=> state.setClearCart);
+  const setOrderProducts = useOrderStore(state=> state.setOrderProducts)
   const [coupon, setCoupon] = useState("");
   const pricePerItem = 99.99; // Example product price
   const discount = coupon === "DISCOUNT10" ? 0.1 * pricePerItem : 0; // 10% discount for 'DISCOUNT10'
@@ -16,6 +22,8 @@ function Cart() {
 
   const totalPrice = quantity * (pricePerItem - discount);
 
+  const navigate = useNavigate();
+
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-3xl font-bold mb-8">Shopping Cart</h1>
@@ -23,41 +31,51 @@ function Cart() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Cart Items Section */}
         <div className="w-full lg:w-3/4">
-          <div className="card bg-base-100 shadow-lg p-6 mb-4">
-            <div className="flex flex-col lg:flex-row items-center gap-6">
-              {/* Product Image */}
-              <div className="flex-shrink-0">
-                <img
-                  src="https://via.placeholder.com/100"
-                  alt="Product"
-                  className="w-24 h-24 object-cover rounded"
-                />
-              </div>
+          {cartProduct.length>0? cartProduct.map((items, index) => {
+            return (
+              <div key={index}>
+                <div className="card bg-base-100 shadow-lg p-6 mb-4">
+                  <div className="flex flex-col lg:flex-row items-center gap-6">
+                    {/* Product Image */}
+                    <div className="flex-shrink-0">
+                      <img
+                        src={items.image ? items.image : imageNotFound}
+                        alt="Product"
+                        className="w-24 h-24 object-cover rounded"
+                      />
+                    </div>
 
-              {/* Product Details */}
-              <div className="flex-1">
-                <h2 className="text-lg font-semibold">Product Name</h2>
-                <p className="text-gray-600">$99.99</p>
+                    {/* Product Details */}
+                    <div className="flex-1">
+                      <h2 className="text-lg font-semibold">{items.title}</h2>
+                      <p className="text-gray-600">{items.price}</p>
 
-                {/* Quantity Selector */}
-                <div className="mt-4">
-                  <label className="text-sm font-medium">Quantity:</label>
-                  <input
-                    type="number"
-                    min="1"
-                    value={quantity}
-                    onChange={handleQuantityChange}
-                    className="input input-bordered w-20 ml-2"
-                  />
+                      {/* Quantity Selector */}
+                      <div className="mt-4">
+                        <label className="text-sm font-medium">Quantity:</label>
+                        <input
+                          type="number"
+                          min="1"
+                          value={quantity}
+                          onChange={handleQuantityChange}
+                          className="input input-bordered w-20 ml-2"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Price Section */}
+                    <div className="text-lg font-semibold">
+                      Total: ${(pricePerItem * quantity).toFixed(2)}
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              {/* Price Section */}
-              <div className="text-lg font-semibold">
-                Total: ${(pricePerItem * quantity).toFixed(2)}
-              </div>
+            );
+          }):(
+            <div className="text-xl text-center font-bold">
+              <h3>Cart is empty ...</h3>
             </div>
-          </div>
+          )}
 
           {/* Discount Coupon Section */}
           <div className="card bg-base-100 shadow-lg p-6">
@@ -98,8 +116,34 @@ function Cart() {
               <span>${totalPrice.toFixed(2)}</span>
             </div>
 
-            {/* Update Cart Button */}
-            <button className="btn btn-primary w-full">Update Cart</button>
+           {cartProduct.length>0? <><button
+              className="btn"
+              onClick={() => {
+                document.getElementById("my_modal_2").showModal();
+                setOrderProducts(cartProduct)
+                setTimeout(() => {
+                  navigate("/OrderStatus");
+                }, 2000);
+              }}
+            >
+              Place Order (COD)
+            </button>
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-2xl">Order Placed Successfully</h3>
+                <p className="py-4">Redirecting to Order section <span className="loading loading-dots loading-xs relative top-1"></span></p>
+              </div>
+              <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+              </form>
+            </dialog>
+            </>:
+            (
+              <div className="text-xl text-center font-bold">
+                <h3>...</h3>
+              </div>
+            )
+            }
           </div>
         </div>
       </div>

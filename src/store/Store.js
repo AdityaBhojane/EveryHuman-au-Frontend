@@ -3,7 +3,7 @@ import { create } from "zustand";
  export const useProductStore = create((set) => ({
     category:'Tops',
     setCategory : (cat) => set({category: cat})
-}))
+}));
 
  export const useSearchStore = create((set) => ({
     fetchBySearch: true,
@@ -11,4 +11,16 @@ import { create } from "zustand";
     setSearchValue : (val) => set({searchValue: val}),
     setFetchBySearch : (val) => set({fetchBySearch: val}),
 
+}));
+
+
+export const useCartStore = create((set)=>({
+    cartProduct:[],
+    setCartProducts : (val)=> set((state)=>({cartProduct:[...state.cartProduct,val]})),
+    setClearCart: () => set({cartProduct:[]})
+}));
+
+export const useOrderStore = create((set)=>({
+    orderProduct:[],
+    setOrderProducts : (val)=> set((state)=>({orderProduct:[...state.orderProduct,val]})),
 }))

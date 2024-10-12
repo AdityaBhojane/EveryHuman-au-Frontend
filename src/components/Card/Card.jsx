@@ -1,7 +1,11 @@
 /* eslint-disable react/prop-types */
 
+import { useCartStore } from "../../store/Store";
+
 
 function Card({Title,Description,image,price}) {
+
+  const setCartProducts = useCartStore(state => state.setCartProducts)
 
   return (
     <>
@@ -20,7 +24,16 @@ function Card({Title,Description,image,price}) {
             <h3 className="font-bold">Price : {price}$</h3>
           </div>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary">Buy now !</button>
+            <button className="btn btn-primary"
+             onClick={()=>{
+              setCartProducts({
+                title:Title,
+                description:Description,
+                image:image,
+                price:price
+              })
+             }}
+            >Add to cart</button>
           </div>
         </div>
       </div>
