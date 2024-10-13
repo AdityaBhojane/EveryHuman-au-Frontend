@@ -3,9 +3,21 @@
 import { useCartStore } from "../../store/Store";
 
 
+
 function Card({Title,Description,image,price}) {
 
-  const setCartProducts = useCartStore(state => state.setCartProducts)
+  const cartProduct = useCartStore(state => state.cartProduct)
+  const setCartProducts = useCartStore(state => state.setCartProducts);
+
+  const duplicateProduct = (Title)=>{
+    for (let i = 0; i < cartProduct.length; i++) {
+      const product =  cartProduct[i].title.includes(Title);
+      if(product){
+        return true;
+      }
+    }
+    return false;
+  }
 
   return (
     <>
@@ -26,6 +38,10 @@ function Card({Title,Description,image,price}) {
           <div className="card-actions justify-end">
             <button className="btn btn-primary"
              onClick={()=>{
+              if(duplicateProduct(Title)){
+                alert("This Product is already added into the cart");
+                return;
+              }
               setCartProducts({
                 title:Title,
                 description:Description,

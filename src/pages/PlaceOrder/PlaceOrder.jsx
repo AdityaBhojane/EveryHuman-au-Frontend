@@ -1,20 +1,34 @@
 import { useState } from "react";
-
+import {
+  useCartStore,
+  useOrderStore,
+  usePlaceOrderStore,
+} from "../../store/Store";
+import { useNavigate } from "react-router-dom";
 
 function PlaceOrder() {
-  const [name, setName] = useState('');
-  const [address, setAddress] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [deliveryDate] = useState('2024-09-15'); // Example delivery date
-  const [paymentMethod, setPaymentMethod] = useState('Credit Card');
-  const [cardNumber, setCardNumber] = useState('');
-  const [cardExpiry, setCardExpiry] = useState('');
-  const [cardCVC, setCardCVC] = useState('');
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [pincode, setPincode] = useState("");
+  const [deliveryDate] = useState("2024-09-15"); // Example delivery date
+  const [paymentMethod, setPaymentMethod] = useState("Credit Card");
+  // const [cardNumber, setCardNumber] = useState('');
+  // const [cardExpiry, setCardExpiry] = useState('');
+  // const [cardCVC, setCardCVC] = useState('');
 
-  const handlePlaceOrder = () => {
-    // Handle order placement logic here
-    alert('Order placed successfully!');
-  };
+  const navigate = useNavigate();
+
+  const setOrderProducts = useOrderStore((state) => state.setOrderProducts);
+  const setClearCart = useCartStore((state) => state.setClearCart);
+  const checkoutProducts = usePlaceOrderStore(
+    (state) => state.checkoutProducts
+  );
+
+  const getTotalPrice = checkoutProducts.reduce(
+    (acc, curr) => acc + parseInt(curr.price),
+    0
+  );
+
 
   return (
     <div className="container mx-auto p-8">
@@ -35,6 +49,7 @@ function PlaceOrder() {
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your name"
                 className="input input-bordered w-full"
+                required
               />
             </div>
 
@@ -46,6 +61,7 @@ function PlaceOrder() {
                 onChange={(e) => setAddress(e.target.value)}
                 placeholder="Enter your address"
                 className="textarea textarea-bordered w-full"
+                required
               />
             </div>
 
@@ -58,6 +74,7 @@ function PlaceOrder() {
                 onChange={(e) => setPincode(e.target.value)}
                 placeholder="Enter your pincode"
                 className="input input-bordered w-full"
+                required
               />
             </div>
 
@@ -65,6 +82,9 @@ function PlaceOrder() {
             <div className="mt-4">
               <h3 className="text-lg font-semibold">Estimated Delivery:</h3>
               <p>{deliveryDate}</p>
+            </div>
+            <div className="text-lg font-semibold">
+              <p className="">Total Price : $ {getTotalPrice}</p>
             </div>
           </div>
         </div>
@@ -76,7 +96,7 @@ function PlaceOrder() {
 
             {/* Payment Method Radio Buttons */}
             <div className="mb-4">
-              <label className="cursor-pointer flex items-center">
+              {/* <label className="cursor-pointer flex items-center">
                 <input
                   type="radio"
                   name="paymentMethod"
@@ -86,13 +106,13 @@ function PlaceOrder() {
                   className="radio radio-primary mr-2"
                 />
                 <span>Credit/Debit Card</span>
-              </label>
+              </label> */}
               <label className="cursor-pointer flex items-center mt-2">
                 <input
                   type="radio"
                   name="paymentMethod"
                   value="Cash on Delivery"
-                  checked={paymentMethod === 'Cash on Delivery'}
+                  checked={paymentMethod === "Cash on Delivery"}
                   onChange={(e) => setPaymentMethod(e.target.value)}
                   className="radio radio-primary mr-2"
                 />
@@ -101,7 +121,7 @@ function PlaceOrder() {
             </div>
 
             {/* Card Details Section (shown only if Credit/Debit Card is selected) */}
-            {paymentMethod === 'Credit Card' && (
+            {/* {paymentMethod === 'Credit Card' && (
               <div className="mt-4">
                 <div className="mb-4">
                   <label className="text-sm font-medium">Card Number</label>
@@ -136,18 +156,49 @@ function PlaceOrder() {
                   </div>
                 </div>
               </div>
-            )}
+            )} */}
 
-            {/* Checkout Button */}
-            <button className="btn btn-primary w-full" onClick={handlePlaceOrder}>
-              Checkout
+            <button
+              className="btn btn-primary w-full"
+              onClick={() => {
+                // Handle order placement logic here
+                if (name == "" || address == "" || pincode == "") {
+                  alert("Please enter all details");
+                } else if (isNaN(parseInt(pincode))) {
+                  alert("Please enter valid pin-code");
+                } else if (paymentMethod == "Credit Card") {
+                  alert("Select Payment Method");
+                } else {
+                  document.getElementById("my_modal_2").showModal();
+                  setOrderProducts(checkoutProducts);
+                  setClearCart([]);
+                  setTimeout(() => {
+                    navigate("/OrderStatus");
+                  }, 2000);
+                }
+              }}
+            >
+              Place Order (COD)
             </button>
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-2xl">
+                  Please wait we are processing the order
+                </h3>
+                <p className="py-4">
+                  Redirecting to Checkout Page{" "}
+                  <span className="loading loading-dots loading-xs relative top-1"></span>
+                </p>
+              </div>
+              <form method="dialog" className="modal-backdrop">
+                <button>close</button>
+              </form>
+            </dialog>
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
 
-
-export default PlaceOrder
+export default PlaceOrder;

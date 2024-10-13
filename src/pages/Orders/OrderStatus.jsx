@@ -1,9 +1,13 @@
-import { useCartStore } from "../../store/Store";
+import { useOrderStore} from "../../store/Store";
 
 const OrderStatus = () => {
   const currentStatus = 2; // Dynamic order status value (e.g., 1 = Order Placed, 2 = On the Way, etc.)
 
-  const cartProduct = useCartStore((state) => state.cartProduct);
+  const orderProduct = useOrderStore(
+    (state) => state.orderProduct
+  );
+
+  console.log(orderProduct)
 
   return (
     <div className="container mx-auto p-8">
@@ -11,8 +15,8 @@ const OrderStatus = () => {
 
       <div className="card bg-base-100 shadow-lg p-6">
         {/* Product Information */}
-        {cartProduct.length > 0 ? (
-          cartProduct.map((items, index) => {
+        {orderProduct.length > 0 ? (
+          orderProduct.map((items, index) => {
             return (
               <div key={index} className="flex flex-col lg:flex-row gap-6 my-5">
                 <div className="flex-shrink-0 w-[20%]">

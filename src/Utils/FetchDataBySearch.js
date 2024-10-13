@@ -10,17 +10,16 @@ export default async function FetchDataBySearch(searchValue, price) {
       (items) =>
         items.title.toLowerCase().includes(searchValue.toLowerCase())
     );
-    const newPrice = filteredProducts[0]?.variants[0]?.price;
-
-    if (price > newPrice) {
-      return filteredProducts.filter(
+    // const newPrice = filteredProducts[0]?.variants[0]?.price;
+    if (price) {
+      const PriceFilter = filteredProducts.filter(
         (items) =>
-          parseInt(items.variants[0].price) < price &&
-          parseInt(items.variants[0].price) > price - price / 4
+          parseInt(items.variants[0].price) < price 
       );
+      return PriceFilter.sort((a, b) =>  parseFloat(b.variants[0].price) - parseFloat(a.variants[0].price));
     } else {
       console.log(filteredProducts);
-      return filteredProducts;
+      return filteredProducts.sort((a, b) =>  parseFloat(b.variants[0].price) - parseFloat(a.variants[0].price));
     }
   } catch (error) {
     console.log(error);

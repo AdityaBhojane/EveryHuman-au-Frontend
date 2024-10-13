@@ -17,10 +17,15 @@ import { create } from "zustand";
 export const useCartStore = create((set)=>({
     cartProduct:[],
     setCartProducts : (val)=> set((state)=>({cartProduct:[...state.cartProduct,val]})),
-    setClearCart: () => set({cartProduct:[]})
+    setClearCart: (val) => set({cartProduct:val})
 }));
 
 export const useOrderStore = create((set)=>({
     orderProduct:[],
-    setOrderProducts : (val)=> set((state)=>({orderProduct:[...state.orderProduct,val]})),
+    setOrderProducts : (val)=> set((state)=>({orderProduct:[...state.orderProduct,...val]})),
+}))
+
+export const usePlaceOrderStore = create((set)=>({
+    checkoutProducts:[],
+    setCheckoutProducts: (val)=> set(()=>({checkoutProducts:val}))
 }))

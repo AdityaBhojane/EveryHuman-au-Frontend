@@ -6,18 +6,19 @@ export default async function FetchDataByCategory(category, price) {
     const filteredProducts = response.data.products.filter(
       (items) => items.product_type == category
     );
-    const newPrice = filteredProducts[0]?.variants[0]?.price;
-    if (price > newPrice) {
-      return filteredProducts.filter(
+    // const newPrice = filteredProducts[0]?.variants[0]?.price;
+    if (price) {
+      const PriceFilter = filteredProducts.filter(
         (items) =>
-          parseInt(items.variants[0].price) < price &&
-          parseInt(items.variants[0].price) > price - price / 4
+          parseInt(items.variants[0].price) < price 
       );
+      return PriceFilter.sort((a, b) =>  parseFloat(b.variants[0].price) - parseFloat(a.variants[0].price));
     } else {
-      return filteredProducts;
+      return filteredProducts.sort((a, b) =>  parseFloat(b.variants[0].price) - parseFloat(a.variants[0].price));;
     }
   } catch (error) {
     console.log(error);
     return null;
   }
 }
+

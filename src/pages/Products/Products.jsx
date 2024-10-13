@@ -9,7 +9,7 @@ function Products() {
   const Footwear = useRef();
   const Tops = useRef();
 
-  const [price, setPrice] = useState(50);
+  const [price, setPrice] = useState(200);
 
   const HandleCategory = (newCategory)=>{
     setCategory(newCategory)
@@ -30,13 +30,13 @@ function Products() {
                 <input
                   type="range"
                   min="30"
-                  max="120"
+                  max="200"
                   className="range range-primary"
                   onChange={(e)=> setPrice(e.target.value)}
                 />
                 <div className="flex justify-between text-sm">
                   <span>${price}</span>
-                  <span>$120</span>
+                  <span>$200</span>
                 </div>
               </div>
 
