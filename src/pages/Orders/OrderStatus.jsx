@@ -1,24 +1,31 @@
-import { useOrderStore} from "../../store/Store";
+import { useAdminStore, useOrderStore } from "../../store/Store";
 
 const OrderStatus = () => {
-  const currentStatus = 2; // Dynamic order status value (e.g., 1 = Order Placed, 2 = On the Way, etc.)
+  // const DelhiveryStatus = useAdminStore((state) => state.DelhiveryStatus);
+  let a = 1;
 
-  const orderProduct = useOrderStore(
-    (state) => state.orderProduct
-  );
+  const orderProduct = useOrderStore((state) => state.orderProduct);
+  const clearStorage = useOrderStore((state) => state.clearStorage);
 
-  console.log(orderProduct)
 
   return (
     <div className="container mx-auto p-8">
-      <h1 className="text-3xl font-bold mb-8">Order Status</h1>
+      <div className="flex">
+        <h1 className="text-3xl font-bold mb-8">Order Status</h1>
+      </div>
+      <button className="border border-[#ccc] rounded-xl p-2 bg-red-400 text-white"
+       onClick={()=> {clearStorage(); window.location.reload()}}
+      >Clear All</button>
 
       <div className="card bg-base-100 shadow-lg p-6">
         {/* Product Information */}
         {orderProduct.length > 0 ? (
           orderProduct.map((items, index) => {
             return (
-              <div key={index} className="flex flex-col lg:flex-row gap-6 my-5">
+              <div
+                key={index}
+                className="flex flex-col lg:flex-row gap-6 my-6 border border-[#ccc] p-6 rounded-xl"
+              >
                 <div className="flex-shrink-0 w-[20%]">
                   <img
                     src={items.image}
@@ -32,35 +39,35 @@ const OrderStatus = () => {
                   <ul className="steps steps-vertical lg:steps-horizontal w-full">
                     <li
                       className={`step ${
-                        currentStatus >= 1 ? "step-primary" : ""
+                        a >= 1 ? "step-primary" : ""
                       }`}
                     >
                       Order Placed
                     </li>
                     <li
                       className={`step ${
-                        currentStatus >= 2 ? "step-primary" : ""
+                        a >= 2 ? "step-primary" : ""
                       }`}
                     >
                       Processing
                     </li>
                     <li
                       className={`step ${
-                        currentStatus >= 3 ? "step-primary" : ""
+                        a >= 3 ? "step-primary" : ""
                       }`}
                     >
                       On the Way
                     </li>
                     <li
                       className={`step ${
-                        currentStatus >= 4 ? "step-primary" : ""
+                        a >= 4 ? "step-primary" : ""
                       }`}
                     >
                       Out for Delivery
                     </li>
                     <li
                       className={`step ${
-                        currentStatus >= 5 ? "step-primary" : ""
+                        a >= 5 ? "step-primary" : ""
                       }`}
                     >
                       Delivered

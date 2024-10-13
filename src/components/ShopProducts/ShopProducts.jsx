@@ -42,8 +42,7 @@ function ShopProducts({ price }) {
   if (isLoading) {
     return <CardSkeletonProducts />;
   }
-
-
+ 
   return (
     <>
       <div className="w-[90%] m-auto">
@@ -57,6 +56,7 @@ function ShopProducts({ price }) {
                   image={items.images[0]? items.images[0].src:imageNotFound}
                   Description={items?.handle}
                   price={items.variants[0]?.price}
+                  details={items.body_html}
                 />
               );
             })

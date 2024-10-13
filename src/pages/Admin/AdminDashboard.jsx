@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useAdminStore, useOrderStore } from '../../store/Store';
 
-const products = [
-  { id: 1, title: 'Product 1', price: '$29.99', date: '2024-09-01', status: 'Order Placed' },
-  { id: 2, title: 'Product 2', price: '$49.99', date: '2024-09-05', status: 'On the Way' },
-  { id: 3, title: 'Product 3', price: '$19.99', date: '2024-09-10', status: 'Delivered' },
-];
 
 const AdminDashboard = () => {
+
+  const orderProduct = useOrderStore((state=> state.orderProduct));
+
+  const DelhiveryStatus = useAdminStore((state=> state.DelhiveryStatus));
+  
+  console.log(DelhiveryStatus);
+
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deliveryStatus, setDeliveryStatus] = useState('');
@@ -30,6 +33,11 @@ const AdminDashboard = () => {
     // Additional logic to update status in backend
     alert(`Delivery status set to: ${e.target.value}`);
   };
+
+  const date = new Date();
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
 
   const handleRefund = () => {
     if (refundAmount) {
@@ -58,27 +66,27 @@ const AdminDashboard = () => {
               <tr>
                 <th>Image/Title</th>
                 <th>Price</th>
-                <th>Date</th>
+                <th>Order Date</th>
                 <th>Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {products.map((product) => (
-                <tr key={product.id}>
+              {orderProduct.map((product,index) => (
+                <tr key={index}>
                   <td>
                     <div className="flex items-center space-x-2">
-                      <div className="w-12 h-12 bg-gray-300"></div> {/* Placeholder for product image */}
+                      <div className="w-12 h-12 bg-gray-300"><img className='object-cover' src={product.image} alt="image" /></div> {/* Placeholder for product image */}
                       <span>{product.title}</span>
                     </div>
                   </td>
                   <td>{product.price}</td>
-                  <td>{product.date}</td>
-                  <td>{product.status}</td>
+                  <td>{`${day}/${month}/${year}`}</td>
+                  <td>{DelhiveryStatus.value}</td>
                   <td>
                     <button
                       className="btn btn-sm btn-primary"
-                      onClick={() => openModal(product)}
+                      onClick={() => openModal(orderProduct)}
                     >
                       Manage
                     </button>

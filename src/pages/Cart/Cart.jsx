@@ -101,7 +101,7 @@ function Cart() {
             </div>
             <div className="flex justify-between mb-4 text-lg font-semibold">
               <span>Total:</span>
-              <span>${0}</span>
+              <span>${}</span>
             </div>
 
             {cartProduct.length > 0 ? (

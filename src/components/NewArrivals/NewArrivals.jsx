@@ -14,6 +14,8 @@ function NewArrivals() {
   if(isLoading){
     return <CardSkeleton/>
   }
+  
+  console.log(data[0].body_html)
 
   return (
     <>
@@ -30,6 +32,7 @@ function NewArrivals() {
                 image={items?.images[0]?.src}
                 Description={items.handle}
                 price={items.variants[0].price}
+                details={items.body_html}
               />
             );
           })}

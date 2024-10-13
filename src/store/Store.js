@@ -1,31 +1,60 @@
 import { create } from "zustand";
 
- export const useProductStore = create((set) => ({
-    category:'Tops',
-    setCategory : (cat) => set({category: cat})
+export const useProductStore = create((set) => ({
+  category: "Tops",
+  setCategory: (cat) => set({ category: cat }),
 }));
 
- export const useSearchStore = create((set) => ({
-    fetchBySearch: true,
-    searchValue: '',
-    setSearchValue : (val) => set({searchValue: val}),
-    setFetchBySearch : (val) => set({fetchBySearch: val}),
-
+export const useSearchStore = create((set) => ({
+  fetchBySearch: true,
+  searchValue: "",
+  setSearchValue: (val) => set({ searchValue: val }),
+  setFetchBySearch: (val) => set({ fetchBySearch: val }),
 }));
 
-
-export const useCartStore = create((set)=>({
-    cartProduct:[],
-    setCartProducts : (val)=> set((state)=>({cartProduct:[...state.cartProduct,val]})),
-    setClearCart: (val) => set({cartProduct:val})
+export const useCartStore = create((set) => ({
+  cartProduct: [],
+  setCartProducts: (val) =>
+    set((state) => ({ cartProduct: [...state.cartProduct, val] })),
+  setClearCart: (val) => set({ cartProduct: val }),
 }));
 
-export const useOrderStore = create((set)=>({
-    orderProduct:[],
-    setOrderProducts : (val)=> set((state)=>({orderProduct:[...state.orderProduct,...val]})),
-}))
+export const useOrderStore = create((set) => {
+  const initialData = JSON.parse(localStorage.getItem("orderProduct")) || [];
 
-export const usePlaceOrderStore = create((set)=>({
-    checkoutProducts:[],
-    setCheckoutProducts: (val)=> set(()=>({checkoutProducts:val}))
-}))
+  return {
+    orderProduct: initialData,
+    setOrderProducts: (val) =>
+      set((state) => {
+        const updateStorage = [...state.orderProduct, ...val];
+        localStorage.setItem("orderProduct", JSON.stringify(updateStorage));
+        return { orderProduct: updateStorage };
+      }),
+    clearStorage: () => localStorage.clear(),
+  };
+});
+
+export const usePlaceOrderStore = create((set) => ({
+  checkoutProducts: [],
+  setCheckoutProducts: (val) => set(() => ({ checkoutProducts: val })),
+}));
+
+export const useProductDetailsStore = create((set) => ({
+  ProductDetails: [],
+  setProductDetails: (val) => set(() => ({ ProductDetails: val })),
+}));
+
+export const useAdminStore = create((set) => {
+    const initialStatus =
+      JSON.parse(localStorage.getItem("DelhiveryStatus")) || [];
+  
+    return {
+      DelhiveryStatus: initialStatus,
+      setDelhiveryStatus: (val) =>
+        set((state) => {
+          const updateStatus = [...state.DelhiveryStatus, val];
+          localStorage.setItem("DelhiveryStatus", JSON.stringify(updateStatus));
+          return { DelhiveryStatus: updateStatus }; // Fix the key here
+        }),
+    };
+  });
