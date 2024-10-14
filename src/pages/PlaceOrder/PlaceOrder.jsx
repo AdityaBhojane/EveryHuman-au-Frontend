@@ -1,6 +1,6 @@
 import { useState } from "react";
 import {
-  useAdminStore,
+  // useAdminStore,
   useCartStore,
   useOrderStore,
   usePlaceOrderStore,
@@ -20,25 +20,28 @@ function PlaceOrder() {
   const navigate = useNavigate();
 
   const setOrderProducts = useOrderStore((state) => state.setOrderProducts);
-  const setDelhiveryStatus = useAdminStore((state=> state.setDelhiveryStatus))
   const setClearCart = useCartStore((state) => state.setClearCart);
   const checkoutProducts = usePlaceOrderStore(
     (state) => state.checkoutProducts
   );
 
+
   const AddDehliveryStatus = ()=>{
-      const status = []
       for (let i = 0; i < checkoutProducts.length; i++) {
-        status.push({
-          id:i+1,
+        checkoutProducts[i].status = {
           currentStatus:1, 
-          value:'Order Placed'
-        })
+          value:'Order Placed',
+          refundRequest:false,
+          cancelRequest:false
+        }
       }
-      return status
+      return;
   }
 
-  console.log(AddDehliveryStatus())
+
+  AddDehliveryStatus()
+
+  console.log(checkoutProducts);
 
 
   const getTotalPrice = checkoutProducts.reduce(
@@ -188,7 +191,6 @@ function PlaceOrder() {
                 } else {
                   document.getElementById("my_modal_2").showModal();
                   setOrderProducts(checkoutProducts);
-                  setDelhiveryStatus()
                   setClearCart([]);
                   setTimeout(() => {
                     navigate("/OrderStatus");

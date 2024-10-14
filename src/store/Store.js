@@ -30,9 +30,40 @@ export const useOrderStore = create((set) => {
         localStorage.setItem("orderProduct", JSON.stringify(updateStorage));
         return { orderProduct: updateStorage };
       }),
+
+    setStatus: (id, num, text) =>
+      set((state) => {
+        const updatedOrderProducts = [...state.orderProduct];
+        updatedOrderProducts[id].status.currentStatus = num;
+        updatedOrderProducts[id].status.value = text;
+
+        localStorage.setItem(
+          "orderProduct",
+          JSON.stringify(updatedOrderProducts)
+        );
+
+        return { orderProduct: updatedOrderProducts };
+      }),
+
+    setCancellation: (id, refund, cancel) =>
+      set((state) => {
+        const updatedOrderProducts = [...state.orderProduct];
+        updatedOrderProducts[id].status.refundRequest = refund;
+        updatedOrderProducts[id].status.cancelRequest = cancel;
+
+        localStorage.setItem(
+          "orderProduct",
+          JSON.stringify(updatedOrderProducts)
+        );
+
+        return { orderProduct: updatedOrderProducts };
+      }),
+
     clearStorage: () => localStorage.clear(),
   };
 });
+
+
 
 export const usePlaceOrderStore = create((set) => ({
   checkoutProducts: [],
@@ -52,9 +83,9 @@ export const useAdminStore = create((set) => {
       DelhiveryStatus: initialStatus,
       setDelhiveryStatus: (val) =>
         set((state) => {
-          const updateStatus = [...state.DelhiveryStatus, val];
+          const updateStatus = [...state.DelhiveryStatus, ...val];
           localStorage.setItem("DelhiveryStatus", JSON.stringify(updateStatus));
-          return { DelhiveryStatus: updateStatus }; // Fix the key here
+          return { DelhiveryStatus: updateStatus }; 
         }),
     };
   });

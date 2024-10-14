@@ -99,10 +99,10 @@ function Cart() {
               <span>Discount:</span>
               <span>-${0}</span>
             </div>
-            <div className="flex justify-between mb-4 text-lg font-semibold">
+            {/* <div className="flex justify-between mb-4 text-lg font-semibold">
               <span>Total:</span>
               <span>${}</span>
-            </div>
+            </div> */}
 
             {cartProduct.length > 0 ? (
               <>

@@ -1,11 +1,9 @@
-import { useAdminStore, useOrderStore } from "../../store/Store";
+import { useOrderStore } from "../../store/Store";
 
 const OrderStatus = () => {
-  // const DelhiveryStatus = useAdminStore((state) => state.DelhiveryStatus);
-  let a = 1;
-
   const orderProduct = useOrderStore((state) => state.orderProduct);
   const clearStorage = useOrderStore((state) => state.clearStorage);
+  const setCancellation = useOrderStore((state) => state.setCancellation);
 
 
   return (
@@ -39,35 +37,35 @@ const OrderStatus = () => {
                   <ul className="steps steps-vertical lg:steps-horizontal w-full">
                     <li
                       className={`step ${
-                        a >= 1 ? "step-primary" : ""
+                      items.status.currentStatus >= 1 ? "step-primary" : ""
                       }`}
                     >
                       Order Placed
                     </li>
                     <li
                       className={`step ${
-                        a >= 2 ? "step-primary" : ""
+                        items.status.currentStatus >= 2 ? "step-primary" : ""
                       }`}
                     >
                       Processing
                     </li>
                     <li
                       className={`step ${
-                        a >= 3 ? "step-primary" : ""
+                        items.status.currentStatus >= 3 ? "step-primary" : ""
                       }`}
                     >
                       On the Way
                     </li>
                     <li
                       className={`step ${
-                        a >= 4 ? "step-primary" : ""
+                        items.status.currentStatus >= 4 ? "step-primary" : ""
                       }`}
                     >
                       Out for Delivery
                     </li>
                     <li
                       className={`step ${
-                        a >= 5 ? "step-primary" : ""
+                        items.status.currentStatus >= 5 ? "step-primary" : ""
                       }`}
                     >
                       Delivered
@@ -87,8 +85,14 @@ const OrderStatus = () => {
 
                 {/* Cancel Button */}
                 <div className="flex items-center justify-center lg:justify-start">
-                  <button className="btn btn-error btn-outline">
-                    Cancel Order
+                  <button 
+                  className="btn btn-error btn-outline"
+                  onClick={()=>{
+                    setCancellation(index,false,true);
+                    alert("Cancellation request is sent !")
+                  }}
+                  >
+                    {items.status.cancelRequest? "Request sent" : items.status.refundRequest? "Refunded" : "Cancel Order"}
                   </button>
                 </div>
               </div>
