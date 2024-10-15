@@ -50,7 +50,7 @@ function Card({Title,Description,image,price,details}) {
             <h3 className="font-bold">Price : {price}$</h3>
           </div>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary"
+            <button className={`btn btn-primary ${duplicateProduct(Title)? "bg-slate-400 text-white":""}`}
              onClick={()=>{
               if(duplicateProduct(Title)){
                 alert("This Product is already added into the cart");
@@ -63,7 +63,7 @@ function Card({Title,Description,image,price,details}) {
                 price:price
               })
              }}
-            >Add to cart</button>
+            >{duplicateProduct(Title)? 'Product added':'Add to cart'}</button>
           </div>
         </div>
       </div>

@@ -17,8 +17,8 @@ const OrderStatus = () => {
 
       <div className="card bg-base-100 shadow-lg p-6">
         {/* Product Information */}
-        {orderProduct.length > 0 ? (
-          orderProduct.map((items, index) => {
+        {orderProduct?.length > 0 ? (
+          orderProduct?.map((items, index) => {
             return (
               <div
                 key={index}
@@ -75,7 +75,7 @@ const OrderStatus = () => {
                   {/* Order Details */}
                   <div className="mt-4 ml-16">
                     <h3 className="text-lg font-semibold">
-                      Status: On the Way
+                      Status: {items?.status.value}
                     </h3>
                     <p className="text-gray-600">
                       Estimated delivery: 2-3 days.
@@ -86,13 +86,13 @@ const OrderStatus = () => {
                 {/* Cancel Button */}
                 <div className="flex items-center justify-center lg:justify-start">
                   <button 
-                  className="btn btn-error btn-outline"
+                  disabled={items?.status.cancelRequest || items?.status.refundRequest || items.status.requestRejected}
+                  className={`${items.status.cancelRequest? "disabled:bg-blue-800 btn disabled:btn-info" : items.status.refundRequest? "disabled:bg-green-800 btn disabled:btn-info" : items.status.requestRejected? "disabled:bg-slate-400 disabled:text-white btn":"btn btn-error"}`}
                   onClick={()=>{
                     setCancellation(index,false,true);
-                    alert("Cancellation request is sent !")
                   }}
                   >
-                    {items.status.cancelRequest? "Request sent" : items.status.refundRequest? "Refunded" : "Cancel Order"}
+                    {items.status.cancelRequest? "Request sent" : items.status.refundRequest? "Refunded" : items.status.requestRejected? "Refund Not Allowed":"Cancel Order"}
                   </button>
                 </div>
               </div>

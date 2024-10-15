@@ -45,11 +45,12 @@ export const useOrderStore = create((set) => {
         return { orderProduct: updatedOrderProducts };
       }),
 
-    setCancellation: (id, refund, cancel) =>
+    setCancellation: (id, refund, cancel, reject=false) =>
       set((state) => {
         const updatedOrderProducts = [...state.orderProduct];
         updatedOrderProducts[id].status.refundRequest = refund;
         updatedOrderProducts[id].status.cancelRequest = cancel;
+        updatedOrderProducts[id].status.requestRejected = reject;
 
         localStorage.setItem(
           "orderProduct",

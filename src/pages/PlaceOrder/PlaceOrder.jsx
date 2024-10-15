@@ -32,7 +32,8 @@ function PlaceOrder() {
           currentStatus:1, 
           value:'Order Placed',
           refundRequest:false,
-          cancelRequest:false
+          cancelRequest:false,
+          requestRejected:false
         }
       }
       return;
@@ -116,17 +117,6 @@ function PlaceOrder() {
 
             {/* Payment Method Radio Buttons */}
             <div className="mb-4">
-              {/* <label className="cursor-pointer flex items-center">
-                <input
-                  type="radio"
-                  name="paymentMethod"
-                  value="Credit Card"
-                  checked={paymentMethod === 'Credit Card'}
-                  onChange={(e) => setPaymentMethod(e.target.value)}
-                  className="radio radio-primary mr-2"
-                />
-                <span>Credit/Debit Card</span>
-              </label> */}
               <label className="cursor-pointer flex items-center mt-2">
                 <input
                   type="radio"
@@ -139,44 +129,6 @@ function PlaceOrder() {
                 <span>Cash on Delivery (COD)</span>
               </label>
             </div>
-
-            {/* Card Details Section (shown only if Credit/Debit Card is selected) */}
-            {/* {paymentMethod === 'Credit Card' && (
-              <div className="mt-4">
-                <div className="mb-4">
-                  <label className="text-sm font-medium">Card Number</label>
-                  <input
-                    type="text"
-                    value={cardNumber}
-                    onChange={(e) => setCardNumber(e.target.value)}
-                    placeholder="1234 5678 9012 3456"
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                <div className="flex gap-4">
-                  <div className="mb-4 flex-1">
-                    <label className="text-sm font-medium">Expiry Date</label>
-                    <input
-                      type="text"
-                      value={cardExpiry}
-                      onChange={(e) => setCardExpiry(e.target.value)}
-                      placeholder="MM/YY"
-                      className="input input-bordered w-full"
-                    />
-                  </div>
-                  <div className="mb-4 flex-1">
-                    <label className="text-sm font-medium">CVC</label>
-                    <input
-                      type="text"
-                      value={cardCVC}
-                      onChange={(e) => setCardCVC(e.target.value)}
-                      placeholder="123"
-                      className="input input-bordered w-full"
-                    />
-                  </div>
-                </div>
-              </div>
-            )} */}
 
             <button
               className="btn btn-primary w-full"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { useOrderStore } from "../../store/Store";
 
 const AdminDashboard = () => {
@@ -7,31 +7,13 @@ const AdminDashboard = () => {
   const setCancellation = useOrderStore((state) => state.setCancellation);
   console.log(orderProduct);
 
-  // const [selectedProduct, setSelectedProduct] = useState(null);
-  // const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [deliveryStatus, setDeliveryStatus] = useState("");
-  const [refundAmount, setRefundAmount] = useState("");
 
-  // const handleDeliveryStatusChange = (e,id) => {
-
-  // };
 
   const date = new Date();
   let day = date.getDate();
   let month = date.getMonth() + 1;
   let year = date.getFullYear();
 
-  const handleRefund = () => {
-    if (refundAmount) {
-      // Logic to process refund
-      alert(`Refund of $${refundAmount} processed successfully!`);
-      setRefundAmount("");
-    }
-  };
-
-  const handleCancellation = (status) => {
-    alert(`Cancellation request: ${status}`);
-  };
 
   return (
     <div className="container mx-auto p-8">
@@ -50,7 +32,7 @@ const AdminDashboard = () => {
                 <th>Status</th>
               </tr>
             </thead>
-            {orderProduct.map((product, index) => (
+            {orderProduct?.map((product, index) => (
               <thead key={index}>
                 <tr key={index}>
                   <td>
@@ -134,7 +116,8 @@ const AdminDashboard = () => {
                       </div>
                       <div className="flex gap-2 mt-2">
                         <button
-                          className="btn btn-success"
+                          className="btn btn-success disabled:border disabled:border-[#797979] disabled:text-white"
+                          disabled={!product.status.cancelRequest}
                           onClick={() => {
                             setCancellation(index, true, false);
                           }}
@@ -142,8 +125,9 @@ const AdminDashboard = () => {
                           Approve
                         </button>
                         <button
-                          className="btn btn-error"
-                          onClick={() => setCancellation(index, false, false)}
+                          // disabled={!product.status.cancelRequest}
+                          className="btn btn-error disabled:border disabled:border-[#797979] disabled:text-white"
+                          onClick={() => setCancellation(index, false, false, true)}
                         >
                           Reject
                         </button>
