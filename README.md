@@ -1,6 +1,6 @@
 # EveryHuman-AU Frontend
 
-This is the frontend application for **EveryHuman AU**, an e-commerce platform that offers a wide range of products to customers. This application was built using **React** and leverages several modern web technologies to enhance user experience, including **Zustand** for state management and **Tailwind CSS** for styling.
+This is the frontend application for **EveryHuman AU**, an e-commerce platform that offers a wide range of products to customers. This application was built using **React** and leverages several modern web technologies to enhance user experience, including **Zustand** for state management and DaisyUI + **Tailwind CSS** for styling.
 
 ## Table of Contents
 
@@ -16,20 +16,19 @@ This is the frontend application for **EveryHuman AU**, an e-commerce platform t
 
 1. **Homepage**: Displays a list of featured products and highlights current offers.
 2. **Product Listing**: Showcases all products with search, pagination, and filter options based on price.
-3. **Product Details**: Each product page contains detailed information with options to add to cart.
-4. **Cart Management**: Add, remove, and update products in the cart.
+3. **Product Details**: Each product page contains detailed information with options to add to cart. 
+4. **Cart Management**: Add, remove, and update products in the cart. ( will be added soon ... )
 5. **Order Placement**: A complete checkout flow where users can place their orders.
 6. **Order Status Tracking**: Users can check the current status of their orders.
 7. **Admin Dashboard**: Admin can manage orders, handle refund requests, and update delivery statuses.
 8. **Dark Mode**: User-friendly dark mode integrated across the application.
-9. **Local Storage**: Saves cart data and order information in local storage to persist across sessions.
+9. **Local Storage**: Saves Ordered data and order information in local storage to persist across sessions.
 10. **Responsive Design**: Fully responsive and optimized for mobile and desktop devices.
-11. **Payment Integration**: Integrates with mock payment gateways to simulate the payment process.
+11. **Payment Integration**: COD Dummy Integrates to simulate the payment process.
 
 ## Technologies Used
 
 - **React**: A JavaScript library for building user interfaces.
-- **TypeScript**: For static type checking and enhancing the development experience.
 - **Zustand**: For global state management.
 - **Axios**: For making API requests.
 - **React Router**: For client-side routing.
@@ -73,7 +72,7 @@ Dynamic Routing: The project uses React Router for navigating between the pages,
 
 ## Sample Video
 
-
+[Click for Sample 3min video](https://youtu.be/IvQBGaH83lk)
 
 ## ScreenShots
 
