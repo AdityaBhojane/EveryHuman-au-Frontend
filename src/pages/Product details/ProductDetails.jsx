@@ -1,8 +1,20 @@
-import { useProductDetailsStore } from "../../store/Store";
+import { useCartStore, useProductDetailsStore } from "../../store/Store";
 
 function ProductDetails() {
 
-  const ProductDetails = useProductDetailsStore(state => state.ProductDetails)
+  const ProductDetails = useProductDetailsStore(state => state.ProductDetails);
+  const setCartProducts = useCartStore((state)=> state.setCartProducts);
+  const cartProduct = useCartStore((state)=> state.cartProduct);
+
+  const duplicateProduct = (Title)=>{
+    for (let i = 0; i < cartProduct.length; i++) {
+      const product =  cartProduct[i].title.includes(Title);
+      if(product){
+        return true;
+      }
+    }
+    return false;
+  }
 
   return (
     <>
@@ -34,9 +46,21 @@ function ProductDetails() {
 
             {/* Add to Cart Button */}
             <button
-             className="btn btn-primary w-full lg:w-1/2"
+             className={`btn btn-primary ${duplicateProduct(ProductDetails.title)? "bg-slate-400 text-white":""}`}
+             onClick={()=>{
+              if(duplicateProduct(ProductDetails.title)){
+                alert("This Product is already added into the cart");
+                return;
+              }
+              setCartProducts({
+                title:ProductDetails.title,
+                description:ProductDetails.paragraph,
+                image:ProductDetails.image,
+                price:ProductDetails.price
+              })
+             }}
              >
-              Add to Cart
+              {duplicateProduct(ProductDetails.title)? 'Product added':'Add to cart'}
             </button>
 
             {/* Additional Details */}

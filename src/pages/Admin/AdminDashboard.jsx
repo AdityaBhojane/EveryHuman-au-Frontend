@@ -125,7 +125,7 @@ const AdminDashboard = () => {
                           Approve
                         </button>
                         <button
-                          // disabled={!product.status.cancelRequest}
+                          disabled={!product.status.cancelRequest}
                           className="btn btn-error disabled:border disabled:border-[#797979] disabled:text-white"
                           onClick={() => setCancellation(index, false, false, true)}
                         >
