@@ -17,7 +17,7 @@ This is the frontend application for **EveryHuman AU**, an e-commerce platform t
 1. **Homepage**: Displays a list of featured products and highlights current offers.
 2. **Product Listing**: Showcases all products with search, pagination, and filter options based on price.
 3. **Product Details**: Each product page contains detailed information with options to add to cart. 
-4. **Cart Management**: Add, remove, and update products in the cart. ( will be added soon ... )
+4. **Cart Management**: Add, remove, and update products in the cart.
 5. **Order Placement**: A complete checkout flow where users can place their orders.
 6. **Order Status Tracking**: Users can check the current status of their orders.
 7. **Admin Dashboard**: Admin can manage orders, handle refund requests, and update delivery statuses.

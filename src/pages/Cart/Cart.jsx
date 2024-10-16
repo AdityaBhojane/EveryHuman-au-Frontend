@@ -1,24 +1,25 @@
-import { useState } from "react";
+
 import { useCartStore, usePlaceOrderStore } from "../../store/Store";
 import imageNotFound from "../../assets/imageNotFound.png";
 import { useNavigate } from "react-router-dom";
+import removeImage from "../../assets/remove.png";
 
 function Cart() {
   const cartProduct = useCartStore((state) => state.cartProduct);
-  const setCheckoutProducts = usePlaceOrderStore((state) => state.setCheckoutProducts);
-  const [coupon, setCoupon] = useState("");
-  // const [totalPrice, setTotalPrice] = useState(0)
-  // const discount = coupon === "DISCOUNT10" ? 0.1 * pricePerItem : 0; // 10% discount for 'DISCOUNT10'
+  const setCartProducts = useCartStore((state) => state.setCartProducts);
+  const setClearCart = useCartStore((state) => state.setClearCart);
+  const setCheckoutProducts = usePlaceOrderStore(
+    (state) => state.setCheckoutProducts
+  );
 
-
-  const getAllPrices = ()=>{
-    const Total = cartProduct.reduce((acc,curr) => acc + parseInt(curr.price), 0);
+  const getAllPrices = () => {
+    const Total = cartProduct.reduce(
+      (acc, curr) => acc + parseInt(curr.price),
+      0
+    );
     return Total;
-  }
-
-  const handleCouponChange = (e) => {
-    setCoupon(e.target.value);
   };
+
 
   const navigate = useNavigate();
 
@@ -33,7 +34,7 @@ function Cart() {
             cartProduct.map((items, index) => {
               return (
                 <div key={index}>
-                  <div className="card bg-base-100 shadow-lg p-6 mb-4">
+                  <div className="card bg-base-100 shadow-lg p-6 mb-4 relative">
                     <div className="flex flex-col lg:flex-row items-center gap-6">
                       {/* Product Image */}
                       <div className="flex-shrink-0">
@@ -55,6 +56,20 @@ function Cart() {
                         Total: ${items.price}
                       </div>
                     </div>
+                    <div className="w-5 absolute top-0 right-0">
+                      <img
+                        className="w-full cursor-pointer"
+                        src={removeImage}
+                        alt="Remove_Icon"
+                        onClick={()=>{
+                          const newProducts = [...cartProduct];
+                          const filteredCart = newProducts.filter((a,i)=>{
+                            return i !== index;
+                          });
+                          setClearCart(filteredCart)
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               );
@@ -71,8 +86,8 @@ function Cart() {
             <div className="flex items-center gap-4">
               <input
                 type="text"
-                value={coupon}
-                onChange={handleCouponChange}
+                // value={coupon}
+                // onChange={handleCouponChange}
                 placeholder="Enter Coupon Code"
                 className="input input-bordered w-full lg:w-1/2"
               />
